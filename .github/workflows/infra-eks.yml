@@ -42,7 +42,7 @@
 #       with:
 #         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-name: 'Terraform'
+name: 'EKS-terraform'
 
 on:
   push:
@@ -54,7 +54,7 @@ permissions:
 
 jobs:
   terraform:
-    name: 'Terraform'
+    name: 'EKS-terraform'
     runs-on: ubuntu-latest
     environment: production
 
@@ -73,6 +73,13 @@ jobs:
       uses: hashicorp/setup-terraform@v1
       with:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+    
+    # Change the directory to the EKS iac one
+    - name: Change Directory
+      run: |
+        pwd 
+        ls
+        cd iac/eks
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
