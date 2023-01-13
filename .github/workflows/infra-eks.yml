@@ -61,3 +61,24 @@ jobs:
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       working-directory: ${{ env.working_directory}}
       run:  terraform apply plan.tfplan 
+
+  terraformdestroy:
+    name: 'EKS-terraform'
+    runs-on: ubuntu-latest
+    environment: production
+    needs: terraform
+    env:
+      working_directory: iac/eks
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    steps:
+      - uses: trstringer/manual-approval@v1
+        with:
+          secret: ${{ github.TOKEN }}
+          approvers: jcontro
+      
+      - name: Terraform Plan and Destroy
+        working-directory: ${{ env.working_directory}}
+        run: |
+          terraform plan -destroy -var "region=eu-west-2" -var-file="../config/common.tfvars" -var-file="../config/prod.tfvars" -input=false -out=plan.tfplan -var "container_access_key=${{ secrets.AWS_ACCESS_KEY }}" -var "container_secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+          terraform apply plan.tfplan
