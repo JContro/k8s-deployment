@@ -59,7 +59,7 @@ jobs:
     - name: Terraform Plan
       run: |
         pwd
-        cd ${{ env.working_directory}}a
+        cd ${{ env.working_directory}}
         terraform plan -var "region=eu-west-2" -var-file="../config/common.tfvars" -var-file="../config/prod.tfvars" -input=false -out=plan.tfplan
 
       # On push to "main", build or change infrastructure according to Terraform configuration files
