@@ -29,10 +29,3 @@ output "oidc_provider_arn" {
   value = module.eks.oidc_provider_arn
 }
 
-output "certificate_arn" {
-  value = resource.aws_acm_certificate.eks.arn
-}
-
-output "domain_name" {
-  value = local.domain_name
-}
