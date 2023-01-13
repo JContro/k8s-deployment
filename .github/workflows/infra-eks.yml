@@ -54,7 +54,7 @@ jobs:
       run: |
         pwd
         cd ${{ env.working_directory}}
-        terraform plan -var "region=eu-west-2" -var-file="../config/common.tfvars" -var-file="../config/prod.tfvars" -input=false -out=plan.tfplan -var "CONTAINER_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}" -var "CONTAINER_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+        terraform plan -var "region=eu-west-2" -var-file="../config/common.tfvars" -var-file="../config/prod.tfvars" -input=false -out=plan.tfplan -var "container_access_key=${{ secrets.AWS_ACCESS_KEY }}" -var "container_secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}"
 
       # On push to "main", build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
